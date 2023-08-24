@@ -320,13 +320,7 @@ final class SwiftOrientCropTests: XCTestCase {
             let imageBuffer = try vImage_Buffer(cgImage: cgImage, format: format, flags: [.noFlags])
 
             // Crop
-            let croppedData = imageBuffer.data.assumingMemoryBound(to: UInt8.self)
-                .advanced(by: Int(orientedRect.origin.y) * imageBuffer.rowBytes + Int(orientedRect.origin.x) * (cgImage.bitsPerPixel / 8))
-
-            let croppedBuffer = vImage_Buffer(data: croppedData,
-                                 height: vImagePixelCount(orientedRect.size.height),
-                                 width: vImagePixelCount(orientedRect.size.width),
-                                 rowBytes: imageBuffer.rowBytes)
+            guard let croppedBuffer = imageBuffer.crop(orientedRect, bitsPerPixel: cgImage.bitsPerPixel) else { return }
 
             // Convert vImage_Buffer to CGImage
             let croppedImage = try croppedBuffer.createCGImage(format: format, flags: [.highQualityResampling])
@@ -388,13 +382,7 @@ final class SwiftOrientCropTests: XCTestCase {
             let imageBuffer = try vImage_Buffer(cgImage: cgImage, format: format, flags: [.noFlags])
 
             // Crop
-            let croppedData = imageBuffer.data.assumingMemoryBound(to: UInt8.self)
-                .advanced(by: Int(orientedRect.origin.y) * imageBuffer.rowBytes + Int(orientedRect.origin.x) * (cgImage.bitsPerPixel / 8))
-
-            let croppedBuffer = vImage_Buffer(data: croppedData,
-                                 height: vImagePixelCount(orientedRect.size.height),
-                                 width: vImagePixelCount(orientedRect.size.width),
-                                 rowBytes: imageBuffer.rowBytes)
+            guard let croppedBuffer = imageBuffer.crop(orientedRect, bitsPerPixel: cgImage.bitsPerPixel) else { return }
 
             // Convert vImage_Buffer to CGImage
             let croppedCGImage = try croppedBuffer.createCGImage(format: format, flags: [.highQualityResampling])
