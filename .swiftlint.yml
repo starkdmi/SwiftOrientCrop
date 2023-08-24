@@ -1,0 +1,10 @@
+disabled_rules:
+  - cyclomatic_complexity
+  - function_body_length
+  - type_body_length
+  - file_length
+  - no_fallthrough_only
+  - line_length
+  - identifier_name
+
+force_cast: warning
