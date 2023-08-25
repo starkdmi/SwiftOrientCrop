@@ -6,6 +6,7 @@
 //
 
 import CoreImage
+import AVFoundation
 
 #if os(macOS)
 import AppKit
@@ -48,7 +49,13 @@ public struct OrientedGenerator {
     /// - source: Source image file
     /// - destination: Destination directory, should exists
     /// - format: Image format
-    public static func generateFrom(source: URL, destination directory: URL, format: ImageFormat = .jpeg) throws {
+    public static func generateFrom(
+        source: URL,
+        destination directory: URL,
+        format: ImageFormat = .jpeg,
+        size: CGSize? = nil,
+        quality: Double? = nil
+    ) throws {
         /* The equavialent to this code can be achieved using ImageMagick (except the direction labels):
          convert "image.jpg" -auto-orient -set option:exif '1' -orient "TopLeft" "oriented_1.jpg";
          convert "image.jpg" -auto-orient -set option:exif '2' -orient "TopRight" -flop "oriented_2.jpg";
@@ -66,6 +73,16 @@ public struct OrientedGenerator {
 
         let context = CIContext()
         var ciImage = CIImage(contentsOf: source, options: [.applyOrientationProperty: true])!
+        // Resize
+        if let size = size, ciImage.extent.width > size.width || ciImage.extent.height > size.height {
+            // Size to fit in
+            let rect = AVMakeRect(aspectRatio: ciImage.extent.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+
+            ciImage = ciImage.applyingFilter("CILanczosScaleTransform", parameters: [
+                kCIInputScaleKey: rect.size.width / ciImage.extent.size.width,
+                kCIInputAspectRatioKey: 1.0
+            ])
+        }
 
         // MARK: Direction Labels
 
@@ -158,22 +175,57 @@ public struct OrientedGenerator {
                 kCGImagePropertyOrientation: orientation.orientation.rawValue
             ])
 
+            // Properties
+            var options: [CIImageRepresentationOption: Any] = [:]
+            if let quality = quality {
+                // PNG and TIFF will not be affected
+                options[CIImageRepresentationOption(rawValue: kCGImageDestinationLossyCompressionQuality as String)] = quality
+            }
+
             let destination = directory.appendingPathComponent("\(filename)_\(id)")
 
             // Save image
             switch format {
             case .jpeg:
-                try context.writeJPEGRepresentation(of: orientedImage, to: destination.appendingPathExtension("jpg"), colorSpace: colorSpace)
+                try context.writeJPEGRepresentation(
+                    of: orientedImage,
+                    to: destination.appendingPathExtension("jpg"),
+                    colorSpace: colorSpace,
+                    options: options
+                )
             case .png:
-                try context.writePNGRepresentation(of: orientedImage, to: destination.appendingPathExtension("png"), format: pixelFormat, colorSpace: colorSpace)
+                try context.writePNGRepresentation(
+                    of: orientedImage,
+                    to: destination.appendingPathExtension("png"),
+                    format: pixelFormat,
+                    colorSpace: colorSpace,
+                    options: options
+                )
             case .heif:
-                try context.writeHEIFRepresentation(of: orientedImage, to: destination.appendingPathExtension("heic"), format: pixelFormat, colorSpace: colorSpace)
+                try context.writeHEIFRepresentation(
+                    of: orientedImage,
+                    to: destination.appendingPathExtension("heic"),
+                    format: pixelFormat,
+                    colorSpace: colorSpace,
+                    options: options
+                )
             case .heif10:
                 if #available(macOS 12.0, *) {
-                    try context.writeHEIF10Representation(of: orientedImage, to: destination.appendingPathExtension("heic"), colorSpace: colorSpace)
+                    try context.writeHEIF10Representation(
+                        of: orientedImage,
+                        to: destination.appendingPathExtension("heic"),
+                        colorSpace: colorSpace,
+                        options: options
+                    )
                 }
             case .tiff:
-                try context.writeTIFFRepresentation(of: orientedImage, to: destination.appendingPathExtension("tiff"), format: pixelFormat, colorSpace: colorSpace)
+                try context.writeTIFFRepresentation(
+                    of: orientedImage,
+                    to: destination.appendingPathExtension("tiff"),
+                    format: pixelFormat,
+                    colorSpace: colorSpace,
+                    options: options
+                )
             }
         }
     }

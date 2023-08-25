@@ -28,7 +28,13 @@ final class SwiftOrientCropTests: XCTestCase {
     func testGenerator() throws {
         let sourceImageFile = Self.mediaDirectory.appendingPathComponent("iphone_x.jpg")
         let destinationDirectory = URL(fileURLWithPath: NSTemporaryDirectory()) // Self.tempDirectory
-        try OrientedGenerator.generateFrom(source: sourceImageFile, destination: destinationDirectory, format: .jpeg)
+        try OrientedGenerator.generateFrom(
+            source: sourceImageFile,
+            destination: destinationDirectory,
+            format: .jpeg,
+            size: CGSize(width: 1280, height: 1280),
+            quality: 0.5
+        )
         print("Generated images saved at \(destinationDirectory.path)")
     }
 
