@@ -49,6 +49,8 @@ public struct OrientedGenerator {
     /// - source: Source image file
     /// - destination: Destination directory, should exists
     /// - format: Image format
+    /// - size: Size to fit, the source resolution is used for `nil`
+    /// - quality: Image compression, from 0.0 to 1.0, used only by compressed image formats
     public static func generateFrom(
         source: URL,
         destination directory: URL,
