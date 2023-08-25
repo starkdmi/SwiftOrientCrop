@@ -18,6 +18,7 @@
 		1D4412182A96459E0065A442 /* CGImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4412172A96459E0065A442 /* CGImage+Extensions.swift */; };
 		1D44121B2A9646C80065A442 /* OrientedGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44121A2A9646C80065A442 /* OrientedGenerator.swift */; };
 		1DD120632A9753590091E4D0 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD120622A9753590091E4D0 /* CGRect+Extensions.swift */; };
+		1DD120652A97E8F80091E4D0 /* vImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD120642A97E8F80091E4D0 /* vImage+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		1D4412172A96459E0065A442 /* CGImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Extensions.swift"; sourceTree = "<group>"; };
 		1D44121A2A9646C80065A442 /* OrientedGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientedGenerator.swift; sourceTree = "<group>"; };
 		1DD120622A9753590091E4D0 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
+		1DD120642A97E8F80091E4D0 /* vImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "vImage+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				1D4412152A96457F0065A442 /* CIImage+Extensions.swift */,
 				1D4412172A96459E0065A442 /* CGImage+Extensions.swift */,
 				1DD120622A9753590091E4D0 /* CGRect+Extensions.swift */,
+				1DD120642A97E8F80091E4D0 /* vImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				1D4411E82A9643C50065A442 /* ContentView.swift in Sources */,
 				1D4412122A96451B0065A442 /* CGSize+Extensions.swift in Sources */,
 				1D4412162A96457F0065A442 /* CIImage+Extensions.swift in Sources */,
+				1DD120652A97E8F80091E4D0 /* vImage+Extensions.swift in Sources */,
 				1D4411E62A9643C50065A442 /* SwiftOrientCropApp.swift in Sources */,
 				1D4412142A9645390065A442 /* CGImagePropertyOrientation+Extensions.swift in Sources */,
 				1DD120632A9753590091E4D0 /* CGRect+Extensions.swift in Sources */,
