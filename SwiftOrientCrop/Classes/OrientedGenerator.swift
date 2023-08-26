@@ -84,6 +84,10 @@ public struct OrientedGenerator {
                 kCIInputScaleKey: rect.size.width / ciImage.extent.size.width,
                 kCIInputAspectRatioKey: 1.0
             ])
+            /*ciImage = ciImage.clampedToExtent().applyingFilter("CILanczosScaleTransform", parameters: [
+                kCIInputScaleKey: rect.size.width / ciImage.extent.size.width,
+                kCIInputAspectRatioKey: 1.0
+            ]).cropped(to: CGRect(origin: .zero, size: rect.size))*/
         }
 
         // MARK: Direction Labels
@@ -118,12 +122,13 @@ public struct OrientedGenerator {
                     var offsetX: CGFloat = 0, offsetY: CGFloat = 0
                     switch string {
                     case "Left":
+                        offsetX = -2
                         offsetY = labelSize.height / 2
                     case "Top":
                         offsetX = labelSize.width / 2
                         offsetY = labelSize.height
                     case "Right":
-                        offsetX = labelSize.width
+                        offsetX = labelSize.width + 2
                         offsetY = labelSize.height / 2
                     case "Bottom":
                         offsetX = labelSize.width / 2
